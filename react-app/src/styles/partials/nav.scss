@@ -1,0 +1,38 @@
+@use "colors";
+
+header{
+  padding: 0 1rem;
+  background-color: colors.$primary;
+}
+
+nav {
+  background-color: colors.$primary;
+  color: white;
+  display:flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .icon{
+      font-size: 25px;
+    }
+
+    a{
+      color: white;
+      text-decoration: none;
+    }
+
+  ul  {
+    display:flex;
+    gap: 1em;
+    list-style: none;
+
+    li {
+        &:first-child {
+          border-right: 1px solid white;
+          padding-right: 1rem; // optional for spacing
+
+        }
+      }
+    }
+  }
