@@ -10,10 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@sanity/client": "^4.0.1",
+    "@sanity/image-url": "^1.1.0",
+    "node": "^23.11.0",
     "react": "^19.0.0",
+
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.4.1",
+
     "react-app": "file:",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0"
+
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
