@@ -1,4 +1,4 @@
-import Nav from "./Nav";
+import Nav from "./Nav";//jsk
 
 export default function Layout({ children }) {
     return (
