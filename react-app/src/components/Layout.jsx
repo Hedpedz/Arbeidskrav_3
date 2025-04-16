@@ -1,4 +1,6 @@
 
+import Nav from "./Nav";//jsk
+
 import { Link } from 'react-router-dom';
 
 function Layout({ children }) {
@@ -18,6 +20,7 @@ function Layout({ children }) {
 export default Layout;
 
 import Nav from "./Nav";
+
 
 export default function Layout({ children }) {
     return (
