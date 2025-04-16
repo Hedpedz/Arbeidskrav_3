@@ -1,1 +1,5 @@
-export const schemaTypes = []
+import member from './member.js';
+
+export const schemaTypes = [
+    member
+]
