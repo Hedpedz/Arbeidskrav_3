@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 export default function UserProfile({ users }) {
   const { user } = useParams(); 
   console.log("user param:", user);
+  
   return (
     <article className="userProfile">
       <img src="public/bilde.png" />
