@@ -1,4 +1,4 @@
-import { member } from './member'
+import member from './member.js';
 
 export const schemaTypes = [
     member
