@@ -1,11 +1,17 @@
+//ge
 import { Link } from "react-router-dom";
+import { client } from '../sanity/client';
 
 export default function UserCard({ user }) {
+  
   return (
     <article className="userCard">
-      <img src="public/bilde.png" />
-      <h3>Navn navnesen</h3>
-      <a href="mailto:someone@example.com">navn@navnesen.no</a>
+      <Link to={`/${user.slug}`}>
+        <img src={user.profileImage} alt={user.name} />
+        <h3>{user.name}</h3>
+      </Link>
+      <a href={`mailto:${user.email}`}>{user.email}</a>
     </article>
   );
-}
+}//j
+//ndmerr
