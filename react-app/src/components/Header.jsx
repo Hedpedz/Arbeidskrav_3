@@ -16,7 +16,7 @@ export default function Nav() {
   return (
     <header>
       <nav>
-        <Link to="/" className="icon">GRUPPE 18</Link>
+        <Link to="/" className="icon">TEAM 18</Link>
         <ul>
           <li>
             <Link to="/">Hjem</Link>
