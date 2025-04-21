@@ -70,6 +70,13 @@ export default {
                   dateFormat: 'DD.MM.YYYY',
                 },
                 initialValue: () => new Date().toISOString().substring(0, 10),
+              },
+              {
+                name: 'hours',
+                title: 'Timer brukt',
+                type: 'number',
+                description: 'Hvor mange timer brukt på oppgaven?',
+                validation: Rule => Rule.min(0).max(24)
               }
             ],
             preview: {
