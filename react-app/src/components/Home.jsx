@@ -22,13 +22,9 @@ export default function Home() {
       }`;
 
       const data = await client.fetch(query);
-      console.log("Loggdata:", data.map(member => ({
-        name: member.name,
-        logEntries: member.logEntries
-      })));
+      
       setUsers(data);
 
-      //Lager en liste med alle loggoppføringer m/ navn
       const allLogs = data.flatMap(member =>
         (member.logEntries || []).map(entry => ({
           name: member.name,
@@ -39,7 +35,6 @@ export default function Home() {
       setLogEntries(sortedLogs)
     };
       
-
     fetchMembers();
   }, []);
 
@@ -54,13 +49,21 @@ export default function Home() {
 
       <h1>Arbeidslogg</h1>
       <table className="logTable">
+        <thead>
+          <tr>
+            <th>Dato</th>
+            <th>Navn</th>
+            <th>Beskrivelse</th>
+            <th>Timer</th>
+          </tr>
+        </thead>
         <tbody>
           {logEntries.map((entry, index) => (
             <tr key={index}>
-              <td>{new Date(entry.logDate).toLocaleDateString('nb-NO')}</td>
+              <td>{entry.logDate ? new Date(entry.logDate).toLocaleDateString('nb-NO') : 'Ukjent dato'}</td>
               <td>{entry.name}</td>
               <td>{entry.description}</td>
-              <td>{entry.hours} timer</td>
+              <td>{entry.hours ? `${entry.hours} timer` : ''}</td>
             </tr>
           ))}
         </tbody>
@@ -68,4 +71,3 @@ export default function Home() {
     </>
   );
 }
-

@@ -1,23 +1,39 @@
 @use "colors";
 
-article {
+.userCard {
   border: 1px solid colors.$secondary;
-  padding: 1rem;
-  max-width: 100%;
+  padding: 3rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 
-  img {
-    width: 100%;       
-    height: auto;
-    margin: 0 auto;     
+  > a:first-of-type {
+    color: inherit;
+    text-decoration: none;
     display: block;
-    max-width: 400px;
-    max-height: 400px;
+    margin-bottom: 0.5rem;
 
+    img {
+      display: block;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      margin: 0 auto 0.5rem auto;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
   }
 
-  a {
+  > a[href^="mailto:"] {
     color: colors.$primary;
     text-decoration: none;
+    font-size: 0.9rem;
+    word-break: break-all;
   }
 }
