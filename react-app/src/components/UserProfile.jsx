@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { client } from '../sanity/client';
 
-
 export default function UserProfile() {
   const { slug } = useParams();
   const [member, setMember] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const query = `*[_type == "member" && slug.current == $slug][0]{
@@ -20,32 +17,28 @@ export default function UserProfile() {
     }`;
     const params = { slug };
 
-    setLoading(true);
     client.fetch(query, params)
       .then(data => {
         setMember(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError('Failed to fetch member data');
-        console.error(err);
-        setLoading(false);
       });
   }, [slug]);
 
-  if (loading) return <p>Laster profildata...</p>;
-  if (error) return <p>{error}</p>;
-  if (!member) return <p>Fant ikke gruppemedlem.</p>;
+  if (!member) {
+    return null; 
+  }
 
   return (
     <article className="userProfile">
-
       <section className="profileMainContent">
         {member.profileImage && <img src={member.profileImage} alt={member.name} />}
         <section className="infoBox">
           <h1>{member.name}</h1>
-          {member.email && <a href={`mailto:${member.email}`}>{member.email}</a>}
-
+          {member.bio && (
+            <section>
+              <h3>Biografi</h3>
+              <p>{member.bio}</p>
+            </section>
+             )}
           {member.interests && member.interests.length > 0 && (
             <section>
               <h3>Interesser</h3>
@@ -56,17 +49,8 @@ export default function UserProfile() {
               </ul>
             </section>
           )}
-
-          {member.bio && (
-            <section>
-              <h3>Biografi</h3>
-              <p>{member.bio}</p>
-            </section>
-          )}
         </section>
       </section> 
-
-
       {member.logEntries && member.logEntries.length > 0 && (
         <section className="logEntriesSection">
           <h2>Loggføringer for {member.name}</h2>
