@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { client } from "../sanity/client"; 
+import { client } from "../sanity/client";
 import UserCard from "./UserCard";
 
 export default function Home() {
@@ -7,35 +7,33 @@ export default function Home() {
   const [logEntries, setLogEntries] = useState([]);
 
   useEffect(() => {
-    const fetchMembers = async () => {
+    const fetchUsers = async () => {
       const query = `*[_type == "member"]{
         name,
         firstName,
         "slug": slug.current,
         email,
-        "profileImage": profileImage.asset->url,
-        logEntries[] {
-        description, 
-        logDate,
-        hours
-        }
+        "profileImage": profileImage.asset->url
       }`;
-
       const data = await client.fetch(query);
-      
       setUsers(data);
-
-      const allLogs = data.flatMap(member =>
-        (member.logEntries || []).map(entry => ({
-          name: member.name,
-          ...entry
-        }))
-      );
-      const sortedLogs = allLogs.sort((a, b) => new Date(b.logDate) - new Date(a.logDate));
-      setLogEntries(sortedLogs)
     };
-      
-    fetchMembers();
+
+    const fetchAllLogs = async () => {
+       const logQuery = `*[_type == "logEntry"] | order(logDate desc, _createdAt desc) {
+         _id,
+         description,
+         logDate,
+         hours,
+         _createdAt,
+         "name": member->name
+       }`;
+       const data = await client.fetch(logQuery);
+       setLogEntries(data);
+    }
+
+    fetchUsers();
+    fetchAllLogs();
   }, []);
 
   return (
@@ -58,14 +56,18 @@ export default function Home() {
           </tr>
         </thead>
         <tbody>
-          {logEntries.map((entry, index) => (
-            <tr key={index}>
-              <td>{entry.logDate ? new Date(entry.logDate).toLocaleDateString('nb-NO') : 'Ukjent dato'}</td>
-              <td>{entry.name}</td>
-              <td>{entry.description}</td>
-              <td>{entry.hours ? `${entry.hours} timer` : ''}</td>
-            </tr>
-          ))}
+          {logEntries.map((entry) => {
+             const displayDate = entry.logDate ? new Date(entry.logDate) : new Date(entry._createdAt);
+             const formattedDate = displayDate.toLocaleDateString('nb-NO', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            return (
+              <tr key={entry._id}>
+                <td>{formattedDate}</td>
+                <td>{entry.name || 'Ukjent'}</td>
+                <td>{entry.description}</td>
+                <td>{entry.hours ? `${entry.hours} timer` : ''}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </>
